@@ -7,7 +7,7 @@
 #include <math.h>
 #include "anomaly_detection_util.h"
 float* copyPointer(float* x, int size);
-float sqrtfArr(float* x, int size, int power);
+float powfArr(float* x, int size, int power);
 
 float avg(float* x, int size){
     float sum = 0;
@@ -22,7 +22,7 @@ float avg(float* x, int size){
 float var(float* x, int size){
 	float* newX = copyPointer(x, size);
     float u = avg(newX, size);
-    sqrtfArr(newX, size, 2);
+    powArr(newX, size, 2);
     float var = avg(newX, size) - sqrtf(u);
     delete[] newX;
     return var;
@@ -43,7 +43,10 @@ float cov(float* x, float* y, int size){
 
 // returns the Pearson correlation coefficient of X and Y
 float pearson(float* x, float* y, int size){
-	return 0;
+    float sqrVarX = sqrtf(var(x, size));
+    float sqrVarY = sqrtf(var(y, size));
+    float pearson = cov(x, y, size) / (sqrVarX * sqrVarY);
+	return pearson;
 }
 
 // performs a linear regression and returns the line equation
@@ -71,11 +74,9 @@ float* copyPointer(float* x, int size) {
     return newX;
 }
 
-float sqrtfArr(float* x, int size, int power) {
+float powArr(float* x, int size, int power) {
     for (int i = 0; i < size; i++)
     {
-        *(x + i) = sqrtf(*(x + i));
+        *(x + i) = powf(*(x + i), power);
     }
 }
-
-
