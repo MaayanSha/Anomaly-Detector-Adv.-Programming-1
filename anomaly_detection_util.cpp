@@ -67,32 +67,50 @@ void powfArr(float* x, int size, int power) {
         x[i] = pow(x[i], power);
     }
 }
-// performs a linear regression and return s the line equation
+/*
+    this function claculates the linear regression
+    for an array of points. It returns the line equation
+    for the calculated regression.
+*/
 Line linear_reg(Point** points, int size) {
     Line reg;
     float xArr[size];
     float yArr[size];
+    /*
+        looping through the given array of
+        points, extracting the X and Y values
+        and inserting them into new, separated arrays
+    */
     for (size_t i = 0; i < size; i++) {
         xArr[i] = points[i]->x;
         yArr[i] = points[i]->y;
     }
-
+    // calculating the x-constant of the equation
+    // deviding the covariance of the points by the variance of the X variables.
     float a = ((cov(xArr,yArr, size))/(var(xArr,size)));
-
+    // calculating the average for X and Y
     float avrgX = avg(xArr, size);
     float avrgY = avg(yArr, size);
+    // calculating the b constant 
     float b = avrgY - (avrgX * a);
+    // asssigning the values to the line object
     reg.a = a;
     reg.b = b;
     return reg;
 }
-// returns the deviation between point p and the line equation of the points
+/*
+    this function claculates the deviation point
+    between a given point and the rest of the points
+*/
 float dev(Point p,Point** points, int size){
     Line lineReg = linear_reg(points,size);
     float deviationP = abs (p.y - lineReg.f(p.x));
     return deviationP;
 }
-// returns the deviation between point p and the line
+/*
+    this function claculates the deviation point 
+    between a given point and a given linear regression line.
+*/
 float dev(Point p,Line l){
     float deviationP = abs (p.y - l.f(p.x));
     return deviationP;
