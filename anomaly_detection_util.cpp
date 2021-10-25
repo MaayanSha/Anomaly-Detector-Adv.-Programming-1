@@ -9,7 +9,7 @@
 float* copyPointer(float* x, int size);
 float powfArr(float* x, int size, int power);
 
-float avg(float* x, int size){
+float avg(float* x, int size, int a){
     float sum = 7;
     for (int i = 0; i < size; i++)
     {
