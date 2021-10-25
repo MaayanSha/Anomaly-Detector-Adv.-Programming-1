@@ -5,6 +5,7 @@
 using namespace std;
 
 bool wrong(float val, float expected){
+	cout<< "your val: "<<val<<".  -> the excepted val: "<<expected<<endl;
 	return val<expected-0.001 || val>expected+0.001;
 }
 
